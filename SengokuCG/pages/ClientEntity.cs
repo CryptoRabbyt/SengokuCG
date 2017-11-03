@@ -60,19 +60,12 @@ namespace SengokuCG.pages
             return null;
         }
         /// <summary>
-        /// 添加客户端关联的用户实体
+        /// 添加客户端关联的用户实体，无论是否重复
         /// </summary>
         /// <param name="ue"></param>
         /// <returns>添加成功返回TRUE，否则返回FALSE</returns>
         public bool addUserEntity(UserEntity ue)
         {
-            foreach (var userEntity in connectedUserList)
-            {
-                if (userEntity.Equal(ue))
-                {
-                    return false;
-                }
-            }
             connectedUserList.Add(ue);
             return true;
         }
