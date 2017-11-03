@@ -39,12 +39,12 @@ namespace SengokuCG
                 UserManager.Instance.regUser(Request);
                 ClientManager.Instance.getContainClient(Request).addUserEntity(UserManager.Instance.getContainUser(Request));
 
-                //-----------------test---------------------
+                //-------------------test-----------------------
                 foreach (var item in UserManager.Instance.UserEntityList)
                 {
                     Response.Write(item.UserName);
                 }
-                //-----------------test---------------------
+                //-------------------test----------------------
             }
         }
     }
