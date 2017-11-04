@@ -22,11 +22,11 @@ namespace SengokuCG
             }
             else//用户登录处理
             {
-                if (UserManager.Instance.userValidate(Request))
+                if (UserManager.Instance.UserValidate(Request))
                 {
-                    UserManager.Instance.regUser(Request);
+                    UserManager.Instance.RegUser(Request);
                     ClientEntity ce = new ClientEntity(Request);
-                    UserEntity ue = UserManager.Instance.getContainUser(Request);
+                    UserEntity ue = UserManager.Instance.GetContainUser(Request);
                     ue.SetClientEntity(ce);
 
                     Response.Redirect("./pages/Main.aspx?userName=" + ue.UserName);//HttpContext.Current.Server.MapPath("./pages/Main.aspx")+ "?userName="+ue.UserName

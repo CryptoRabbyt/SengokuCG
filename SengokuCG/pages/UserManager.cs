@@ -44,7 +44,7 @@ namespace SengokuCG.pages
         /// </summary>
         /// <param name="hr"></param>
         /// <returns></returns>
-        public bool isContainUser(HttpRequest hr)
+        public bool IsContainUser(HttpRequest hr)
         {
             foreach (var userEntity in UserEntityList)
             {
@@ -60,7 +60,7 @@ namespace SengokuCG.pages
         /// </summary>
         /// <param name="hr"></param>
         /// <returns></returns>
-        public bool isContainUser(UserEntity ue)
+        public bool IsContainUser(UserEntity ue)
         {
             foreach (var userEntity in UserEntityList)
             {
@@ -77,7 +77,7 @@ namespace SengokuCG.pages
         /// </summary>
         /// <param name="hr"></param>
         /// <returns></returns>
-        public UserEntity getContainUser(HttpRequest hr)
+        public UserEntity GetContainUser(HttpRequest hr)
         {
             foreach (var userEntity in UserEntityList)
             {
@@ -94,14 +94,14 @@ namespace SengokuCG.pages
         /// </summary>
         /// <param name="hr"></param>
         /// <returns></returns>
-        public bool regUser(HttpRequest hr)
+        public bool RegUser(HttpRequest hr)
         {
-            if (!isContainUser(hr))
+            if (!IsContainUser(hr))
             {
                 UserEntity ue = new UserEntity(hr);
                 UserEntityList.Add(ue);
 
-                removeUserEntityAfterWait(ue, 60000);
+                RemoveUserEntityAfterWait(ue, 60000);
                 return true;
             }
             return false;
@@ -111,7 +111,7 @@ namespace SengokuCG.pages
         /// </summary>
         /// <param name="hr"></param>
         /// <returns></returns>
-        public bool userValidate(HttpRequest hr)
+        public bool UserValidate(HttpRequest hr)
         {
             return true;
         }
@@ -120,7 +120,7 @@ namespace SengokuCG.pages
         /// </summary>
         /// <param name="ue">指定用户</param>
         /// <param name="time">指定时间之后</param>
-        private void removeUserEntityAfterWait(UserEntity ue,int time)
+        private void RemoveUserEntityAfterWait(UserEntity ue,int time)
         {
             Thread th = new Thread(new ThreadStart(() => {
                 Thread.Sleep(time);
