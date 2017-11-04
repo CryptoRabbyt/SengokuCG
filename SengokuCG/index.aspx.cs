@@ -29,7 +29,7 @@ namespace SengokuCG
                     UserEntity ue = UserManager.Instance.getContainUser(Request);
                     ue.SetClientEntity(ce);
 
-                    Response.Redirect(HttpContext.Current.Server.MapPath("./pages/Main.aspx?userName="+ue.UserName));
+                    Response.Redirect(HttpContext.Current.Server.MapPath("./pages/Main.aspx")+ "?userName="+ue.UserName);
                 }
                 else
                 {

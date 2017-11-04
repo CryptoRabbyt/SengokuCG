@@ -46,7 +46,18 @@ namespace SengokuCG.pages
             }
         }
 
-        public Socket ConnectedSocket { get => connectedSocket; set => connectedSocket = value; }
+        public Socket ConnectedSocket
+        {
+            get
+            {
+                return connectedSocket;
+            }
+
+            set
+            {
+                connectedSocket = value;
+            }
+        }
 
         public UserEntity(HttpRequest hr)
         {
