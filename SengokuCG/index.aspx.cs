@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using SengokuCG.pages;
+using System.Xml;
 
 namespace SengokuCG
 {
@@ -14,37 +15,29 @@ namespace SengokuCG
         {
             if (Request.Form["hidden"] == null)//第一次请求
             {
-                UserEntity ue;
-                if ((ue =ClientManager.Instance.getClientUser(Request))!=null)
-                {
-                    //-----------------test---------------------
-                    Response.Write("欢迎你" + ue.UserName);
-                    //-----------------test---------------------
-                    switch (ue.CurGameState)
-                    {
-                        case GameState.Lobby:
-                            break;
-                        case GameState.Room:
-                            break;
-                        case GameState.Game:
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                //返回登录页面
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(HttpContext.Current.Server.MapPath("./pages/html/Login.html"));
+                body.InnerHtml = xmlDoc.GetElementsByTagName("body")[0].InnerXml;
             }
-            else
+            else//用户登录处理
             {
-                ClientManager.Instance.regClient(Request);
-                UserManager.Instance.regUser(Request);
-                ClientManager.Instance.getContainClient(Request).addUserEntity(UserManager.Instance.getContainUser(Request));
-
-                //-------------------test-----------------------
-                foreach (var item in UserManager.Instance.UserEntityList)
+                if (UserManager.Instance.userValidate(Request))
                 {
-                    Response.Write(item.UserName);
+                    UserManager.Instance.regUser(Request);
+                    ClientEntity ce = new ClientEntity(Request);
+                    UserEntity ue = UserManager.Instance.getContainUser(Request);
+                    ue.SetClientEntity(ce);
+
+                    Response.Redirect(HttpContext.Current.Server.MapPath("./pages/Main.aspx?userName="+ue.UserName));
                 }
-                //-------------------test----------------------
+                else
+                {
+                    //返回登录页面
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.Load(HttpContext.Current.Server.MapPath("./pages/html/Login.html"));
+                    body.InnerHtml = "<span> 验证用户失败 </span>" + xmlDoc.GetElementsByTagName("body")[0].InnerXml;
+                }
             }
         }
     }

@@ -89,22 +89,22 @@ namespace SengokuCG.pages
             return null;
         }
 
-        /// <summary>
-        /// 使用请求信息查询该客户端是否已经登录了用户
-        /// </summary>
-        /// <param name="hr"></param>
-        /// <returns>已登录则返回ClientEntity，否则返回null</returns>
-        public UserEntity getClientUser(HttpRequest hr)
-        {
-            foreach (var clientEntity in ClientEntityList)
-            {
-                if (clientEntity.Equal(hr))
-                {
-                    return clientEntity.getUserEntity();
-                }
-            }
-            return null;
-        }
+        ///// <summary>
+        ///// 使用请求信息查询该客户端是否已经登录了用户
+        ///// </summary>
+        ///// <param name="hr"></param>
+        ///// <returns>已登录则返回ClientEntity，否则返回null</returns>
+        //public UserEntity getClientUser(HttpRequest hr)
+        //{
+        //    foreach (var clientEntity in ClientEntityList)
+        //    {
+        //        if (clientEntity.Equal(hr))
+        //        {
+        //            return clientEntity.getUserEntity();
+        //        }
+        //    }
+        //    return null;
+        //}
 
         /// <summary>
         /// 注册客户端实体

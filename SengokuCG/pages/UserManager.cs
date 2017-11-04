@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 namespace SengokuCG.pages
@@ -97,10 +98,39 @@ namespace SengokuCG.pages
         {
             if (!isContainUser(hr))
             {
-                UserEntityList.Add(new UserEntity(hr));
+                UserEntity ue = new UserEntity(hr);
+                UserEntityList.Add(ue);
+
+                removeUserEntityAfterWait(ue, 60000);
                 return true;
             }
             return false;
+        }
+        /// <summary>
+        /// 用户登录验证
+        /// </summary>
+        /// <param name="hr"></param>
+        /// <returns></returns>
+        public bool userValidate(HttpRequest hr)
+        {
+            return true;
+        }
+        /// <summary>
+        /// 一定时间之后把指定用户移出用户列表，表示该用户已不在线上
+        /// </summary>
+        /// <param name="ue">指定用户</param>
+        /// <param name="time">指定时间之后</param>
+        private void removeUserEntityAfterWait(UserEntity ue,int time)
+        {
+            Thread th = new Thread(new ThreadStart(() => {
+                Thread.Sleep(time);
+                if (ue.ConnectedSocket==null)
+                {
+                    this.UserEntityList.Remove(ue);
+                }
+            }));
+            th.IsBackground = true;
+            th.Start();
         }
     }
 }

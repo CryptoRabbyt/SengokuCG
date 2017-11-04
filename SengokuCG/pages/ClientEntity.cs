@@ -47,27 +47,28 @@ namespace SengokuCG.pages
         {
             return clientHostAddress == ce.clientHostAddress && clientAgent == ce.clientAgent;
         }
-        /// <summary>
-        /// 获得客户端最新登录的用户
-        /// </summary>
-        /// <returns></returns>
-        public UserEntity getUserEntity()
-        {
-            if (connectedUserList.Count>0)
-            {
-                return connectedUserList[connectedUserList.Count - 1];
-            }
-            return null;
-        }
-        /// <summary>
-        /// 添加客户端关联的用户实体，无论是否重复
-        /// </summary>
-        /// <param name="ue"></param>
-        /// <returns>添加成功返回TRUE，否则返回FALSE</returns>
-        public bool addUserEntity(UserEntity ue)
-        {
-            connectedUserList.Add(ue);
-            return true;
-        }
+
+        ///// <summary>
+        ///// 获得客户端最新登录的用户
+        ///// </summary>
+        ///// <returns></returns>
+        //public UserEntity getUserEntity()
+        //{
+        //    if (connectedUserList.Count>0)
+        //    {
+        //        return connectedUserList[connectedUserList.Count - 1];
+        //    }
+        //    return null;
+        //}
+        ///// <summary>
+        ///// 添加客户端关联的用户实体，无论是否重复
+        ///// </summary>
+        ///// <param name="ue"></param>
+        ///// <returns>添加成功返回TRUE，否则返回FALSE</returns>
+        //public bool addUserEntity(UserEntity ue)
+        //{
+        //    connectedUserList.Add(ue);
+        //    return true;
+        //}
     }
 }
