@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using System.Net.WebSockets;
 using System.Web;
 
 namespace SengokuCG.pages
@@ -18,7 +19,7 @@ namespace SengokuCG.pages
         private string userName;
         private GameState curGameState=GameState.Lobby;
         private ClientEntity connectedClient;
-        private Socket connectedSocket;
+        private WebSocket connectedSocket;
 
         internal GameState CurGameState
         {
@@ -46,7 +47,7 @@ namespace SengokuCG.pages
             }
         }
 
-        public Socket ConnectedSocket
+        public WebSocket ConnectedSocket
         {
             get
             {
@@ -59,24 +60,15 @@ namespace SengokuCG.pages
             }
         }
 
-        public UserEntity(HttpRequest hr)
+        public UserEntity(string userName)
         {
-            UserName = hr["userName"];
+            UserName = userName;
         }
-
+        
         /// <summary>
         /// 该用户与请求用户是否相同
         /// </summary>
-        /// <param name="hr"></param>
-        /// <returns></returns>
-        public bool Equal(HttpRequest hr)
-        {
-            return UserName == hr["userName"];
-        }
-        /// <summary>
-        /// 该用户与请求用户是否相同
-        /// </summary>
-        /// <param name="hr"></param>
+        /// <param name="ue"></param>
         /// <returns></returns>
         public bool Equal(UserEntity ue)
         {

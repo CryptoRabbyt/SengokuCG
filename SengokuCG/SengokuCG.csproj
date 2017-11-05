@@ -101,6 +101,7 @@
     </Content>
     <Content Include="pages\html\Login.html" />
     <Content Include="pages\Main.aspx" />
+    <Content Include="pages\UserHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -132,6 +133,10 @@
       <DependentUpon>Main.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\UserEntity.cs" />
+    <Compile Include="pages\ReconnectUserManager.cs" />
+    <Compile Include="pages\UserHandler.ashx.cs">
+      <DependentUpon>UserHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="pages\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
-using System.Threading;
 using System.Web;
 
 namespace SengokuCG.pages
 {
+    public enum UserValidateCode
+    {
+        Validation,
+        Online,
+    }
     public class UserManager
     {
         #region 单例
@@ -16,7 +21,7 @@ namespace SengokuCG.pages
         {
             get
             {
-                if (instance==null)
+                if (instance == null)
                 {
                     instance = new UserManager();
                 }
@@ -24,36 +29,33 @@ namespace SengokuCG.pages
             }
         }
         #endregion
+        
 
-        private List<UserEntity> userEntityList = new List<UserEntity>();
-        public List<UserEntity> UserEntityList
+        private Dictionary<string,UserEntity> userEntityDic = new Dictionary<string, UserEntity>();
+        public Dictionary<string, UserEntity> UserEntityDic
         {
             get
             {
-                return userEntityList;
+                return userEntityDic;
             }
 
             set
             {
-                userEntityList = value;
+                userEntityDic = value;
             }
         }
-
         /// <summary>
-        /// 查询请求用户是否已登录
+        /// 用户登录验证
         /// </summary>
-        /// <param name="hr"></param>
+        /// <param name="loginForm">用户的登录表单</param>
         /// <returns></returns>
-        public bool IsContainUser(HttpRequest hr)
+        public UserValidateCode UserValidate(NameValueCollection loginForm)
         {
-            foreach (var userEntity in UserEntityList)
+            if (IsContainUser(loginForm["userName"]))
             {
-                if (userEntity.Equal(hr))
-                {
-                    return true;
-                }
+                return UserValidateCode.Online;
             }
-            return false;
+            return UserValidateCode.Validation;
         }
         /// <summary>
         /// 查询请求用户是否已登录
@@ -62,75 +64,44 @@ namespace SengokuCG.pages
         /// <returns></returns>
         public bool IsContainUser(UserEntity ue)
         {
-            foreach (var userEntity in UserEntityList)
+            foreach (var userEntityKV in UserEntityDic)
             {
-                if (userEntity.Equal(ue))
+                if (userEntityKV.Value.Equal(ue))
                 {
                     return true;
                 }
             }
             return false;
         }
-
         /// <summary>
-        /// 获取已登录的用户
+        /// 查询请求用户是否已登录
         /// </summary>
         /// <param name="hr"></param>
         /// <returns></returns>
-        public UserEntity GetContainUser(HttpRequest hr)
+        public bool IsContainUser(string userName)
         {
-            foreach (var userEntity in UserEntityList)
+            foreach (var userEntityKV in UserEntityDic)
             {
-                if (userEntity.Equal(hr))
+                if (userEntityKV.Value.UserName==userName)
                 {
-                    return userEntity;
+                    return true;
                 }
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// 注册用户实体
-        /// </summary>
-        /// <param name="hr"></param>
-        /// <returns></returns>
-        public bool RegUser(HttpRequest hr)
-        {
-            if (!IsContainUser(hr))
-            {
-                UserEntity ue = new UserEntity(hr);
-                UserEntityList.Add(ue);
-
-                RemoveUserEntityAfterWait(ue, 60000);
-                return true;
             }
             return false;
         }
         /// <summary>
-        /// 用户登录验证
+        /// 注册用户实体
         /// </summary>
-        /// <param name="hr"></param>
+        /// <param name="ue"></param>
         /// <returns></returns>
-        public bool UserValidate(HttpRequest hr)
+        public bool RegUser(UserEntity ue)
         {
-            return true;
-        }
-        /// <summary>
-        /// 一定时间之后把指定用户移出用户列表，表示该用户已不在线上
-        /// </summary>
-        /// <param name="ue">指定用户</param>
-        /// <param name="time">指定时间之后</param>
-        private void RemoveUserEntityAfterWait(UserEntity ue,int time)
-        {
-            Thread th = new Thread(new ThreadStart(() => {
-                Thread.Sleep(time);
-                if (ue.ConnectedSocket==null)
-                {
-                    this.UserEntityList.Remove(ue);
-                }
-            }));
-            th.IsBackground = true;
-            th.Start();
+            if (!IsContainUser(ue))
+            {
+                UserEntityDic.Add(ue.UserName,ue);
+                return true;
+            }
+            return false;
         }
     }
 }

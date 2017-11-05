@@ -22,21 +22,23 @@ namespace SengokuCG
             }
             else//用户登录处理
             {
-                if (UserManager.Instance.UserValidate(Request))
+                UserValidateCode userUC = UserManager.Instance.UserValidate(Request.Form);
+                if (userUC == UserValidateCode.Validation)
                 {
-                    UserManager.Instance.RegUser(Request);
-                    ClientEntity ce = new ClientEntity(Request);
-                    UserEntity ue = UserManager.Instance.GetContainUser(Request);
+                    UserEntity ue = new UserEntity(Request.Form["userName"]);
+                    ReconnectUserManager.Instance.RegUser(Request.Form["userName"], ue);
+                    ClientEntity ce = new ClientEntity(Request.UserHostAddress, Request.UserAgent);
+                    ue = ReconnectUserManager.Instance.GetContainUser(Request.Form["userName"]);
                     ue.SetClientEntity(ce);
 
                     Response.Redirect("./pages/Main.aspx?userName=" + ue.UserName);//HttpContext.Current.Server.MapPath("./pages/Main.aspx")+ "?userName="+ue.UserName
                 }
-                else
+                else if (userUC == UserValidateCode.Online)
                 {
                     //返回登录页面
                     XmlDocument xmlDoc = new XmlDocument();
                     xmlDoc.Load(HttpContext.Current.Server.MapPath("./pages/html/Login.html"));
-                    body.InnerHtml = "<span> 验证用户失败 </span>" + xmlDoc.GetElementsByTagName("body")[0].InnerXml;
+                    body.InnerHtml = "<span> 该用户已处于登录状态 </span>" + xmlDoc.GetElementsByTagName("body")[0].InnerXml;
                 }
             }
         }
