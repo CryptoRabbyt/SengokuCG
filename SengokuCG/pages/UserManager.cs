@@ -103,5 +103,13 @@ namespace SengokuCG.pages
             }
             return false;
         }
+        /// <summary>
+        /// 指定用户移出用户列表，表示该用户已不在线上
+        /// </summary>
+        /// <param name="ue">指定用户</param>
+        public void RemoveUserEntity(UserEntity ue)
+        {
+            this.UserEntityDic.Remove(ue.UserName);
+        }
     }
 }

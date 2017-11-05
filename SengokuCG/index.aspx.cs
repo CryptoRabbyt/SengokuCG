@@ -23,15 +23,20 @@ namespace SengokuCG
             else//用户登录处理
             {
                 UserValidateCode userUC = UserManager.Instance.UserValidate(Request.Form);
+                ClientEntity ce = new ClientEntity(Request.UserHostAddress, Request.UserAgent);
                 if (userUC == UserValidateCode.Validation)
                 {
                     UserEntity ue = new UserEntity(Request.Form["userName"]);
                     ReconnectUserManager.Instance.RegUser(Request.Form["userName"], ue);
-                    ClientEntity ce = new ClientEntity(Request.UserHostAddress, Request.UserAgent);
                     ue = ReconnectUserManager.Instance.GetContainUser(Request.Form["userName"]);
                     ue.SetClientEntity(ce);
 
                     Response.Redirect("./pages/Main.aspx?userName=" + ue.UserName);//HttpContext.Current.Server.MapPath("./pages/Main.aspx")+ "?userName="+ue.UserName
+                }
+                else if (userUC == UserValidateCode.Online&& ReconnectUserManager.Instance.GetContainUser(Request.Form["userName"]).ConnectedClient==ce)//连线重连
+                {
+                    UserEntity ue=ReconnectUserManager.Instance.GetContainUser(Request.Form["userName"]);
+                    Response.Redirect("./pages/Main.aspx?userName=" + ue.UserName);
                 }
                 else if (userUC == UserValidateCode.Online)
                 {

@@ -60,7 +60,7 @@ namespace SengokuCG.pages
                         await userEntityKV.Value.ConnectedSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(str)), WebSocketMessageType.Text, true, CancellationToken.None);
                     }
                     //await socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("服务端收到的信息："+userMsg)), WebSocketMessageType.Text, true, CancellationToken.None);
-                    
+
                 }
             }
         }

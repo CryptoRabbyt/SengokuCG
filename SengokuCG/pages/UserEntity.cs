@@ -60,6 +60,19 @@ namespace SengokuCG.pages
             }
         }
 
+        public ClientEntity ConnectedClient
+        {
+            get
+            {
+                return connectedClient;
+            }
+
+            set
+            {
+                connectedClient = value;
+            }
+        }
+
         public UserEntity(string userName)
         {
             UserName = userName;
@@ -81,7 +94,7 @@ namespace SengokuCG.pages
         /// <returns>添加成功返回TRUE，否则返回FALSE</returns>
         public bool SetClientEntity(ClientEntity ce)
         {
-            connectedClient=ce;
+            ConnectedClient=ce;
             return true;
         }
     }
