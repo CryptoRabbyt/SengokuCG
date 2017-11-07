@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SengokuCG.pages.lobby;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -7,8 +8,9 @@ using System.Web;
 
 namespace SengokuCG.pages
 {
-    enum GameState
+    public enum GameState
     {
+        None,
         Lobby,
         Room,
         Game,
@@ -17,22 +19,10 @@ namespace SengokuCG.pages
     public class UserEntity
     {
         private string userName;
-        private GameState curGameState=GameState.Lobby;
+        private GameState curGameState=GameState.None;//设定初始状态为NONE
         private ClientEntity connectedClient;
         private WebSocket connectedSocket;
-
-        internal GameState CurGameState
-        {
-            get
-            {
-                return curGameState;
-            }
-
-            set
-            {
-                curGameState = value;
-            }
-        }
+        
 
         public string UserName
         {
@@ -97,5 +87,76 @@ namespace SengokuCG.pages
             ConnectedClient=ce;
             return true;
         }
+        /// <summary>
+        /// 当用户连接时的初始化操作，把用户引入属于各自状态的空间
+        /// </summary>
+        public void InitUserConnect()
+        {
+            if (curGameState == GameState.None)
+            {
+                curGameState = GameState.Lobby;
+            }
+            InitUserSpace();
+        }
+        /// <summary>
+        /// 根据用户的现有状态初始化用户空间
+        /// </summary>
+        public void InitUserSpace()
+        {
+            switch (curGameState)
+            {
+                case GameState.None:
+                    break;
+                case GameState.Lobby:
+                    LobbyRoomManager.Instance.update += UserEntity_OnRoomUpdate;
+                    break;
+                case GameState.Room:
+                    break;
+                case GameState.Game:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void UserEntity_OnRoomUpdate(List<LobbyRoomEntity> roomList)
+        {
+            string msg = MsgCoder.Instance.CodeRoomUpdate(roomList);
+            MsgSender.Instance.SendMsg(connectedSocket, msg);
+            
+        }
+
+        /// <summary>
+        /// 退出用户所在空间
+        /// </summary>
+        public void ExitUserSpace()
+        {
+            switch (curGameState)
+            {
+                case GameState.None:
+                    break;
+                case GameState.Lobby:
+                    //LobbyUserManager.Instance.RemoveUser(this);
+                    break;
+                case GameState.Room:
+                    break;
+                case GameState.Game:
+                    break;
+                default:
+                    break;
+            }
+        }
+        /// <summary>
+        /// 重新设定用户的状态，切换其所在的空间
+        /// </summary>
+        /// <param name="gs"></param>
+        public void SetGameState(GameState gs)
+        {
+            ExitUserSpace();
+            curGameState = gs;
+            InitUserSpace();
+        }
+
+
     }
 }

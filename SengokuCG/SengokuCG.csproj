@@ -111,6 +111,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.aspx" />
+    <Content Include="Protocol.txt" />
+    <Content Include="Protocol.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Web.config" />
@@ -124,7 +128,9 @@
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\ClientEntity.cs" />
-    <Compile Include="pages\ClientManager.cs" />
+    <Compile Include="pages\lobby\LobbyRoomEntity.cs" />
+    <Compile Include="pages\lobby\LobbyRoomManager.cs" />
+    <Compile Include="pages\lobby\LobbyUserManager.cs" />
     <Compile Include="pages\Main.aspx.cs">
       <DependentUpon>Main.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -132,6 +138,9 @@
     <Compile Include="pages\Main.aspx.designer.cs">
       <DependentUpon>Main.aspx</DependentUpon>
     </Compile>
+    <Compile Include="pages\MsgCoder.cs" />
+    <Compile Include="pages\MsgHandler.cs" />
+    <Compile Include="pages\MsgSender.cs" />
     <Compile Include="pages\UserEntity.cs" />
     <Compile Include="pages\ReconnectUserManager.cs" />
     <Compile Include="pages\UserHandler.ashx.cs">
@@ -139,6 +148,10 @@
     </Compile>
     <Compile Include="pages\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="pages\game\" />
+    <Folder Include="pages\room\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

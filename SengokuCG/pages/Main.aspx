@@ -11,6 +11,8 @@
         var webSocket;
         webSocket = new WebSocket("ws://localhost:53185/pages/UserHandler.ashx?userName=<% =Request.QueryString["userName"] %>");
         webSocket.onmessage = function (e) {
+            var xmlDoc =new DOMParser().parseFromString(e.data, "text/xml");
+            alert(xmlDoc.getElementsByTagName("Msg").value);
             document.getElementById("showArea").innerHTML += e.data+"<br/>";
         }
         webSocket.onclose = function (e) {

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<!--客户端发送：开设房间-->
+<root>
+  <Msg Id='10101'>
+    <UserName>userName</UserName>
+  </Msg>
+
+  <!--服务端发送：房间更新-->
+  <Msg Id='20101'>
+    <Room Id='id'>
+      <Player01>userName</Player01>
+      <Player02>userName</Player02>
+    </Room>
+    ...
+  </Msg>
+</root>

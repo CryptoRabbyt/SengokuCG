@@ -16,18 +16,8 @@ namespace SengokuCG.pages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Context.IsWebSocketRequest)
-            {
-                Context.AcceptWebSocketRequest(UserThread);
-            }
-        }
-
-        private async Task UserThread(AspNetWebSocketContext context)
-        {
-            WebSocket socket = context.WebSocket;
-
-            await socket.SendAsync(new ArraySegment<byte>(Encoding.Default.GetBytes("hello"+context.QueryString["userName"])), WebSocketMessageType.Text, true, CancellationToken.None);
             
         }
+        
     }
 }

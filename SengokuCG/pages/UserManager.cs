@@ -57,26 +57,11 @@ namespace SengokuCG.pages
             }
             return UserValidateCode.Validation;
         }
+
         /// <summary>
         /// 查询请求用户是否已登录
         /// </summary>
-        /// <param name="hr"></param>
-        /// <returns></returns>
-        public bool IsContainUser(UserEntity ue)
-        {
-            foreach (var userEntityKV in UserEntityDic)
-            {
-                if (userEntityKV.Value.Equal(ue))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        /// <summary>
-        /// 查询请求用户是否已登录
-        /// </summary>
-        /// <param name="hr"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
         public bool IsContainUser(string userName)
         {
@@ -96,7 +81,7 @@ namespace SengokuCG.pages
         /// <returns></returns>
         public bool RegUser(UserEntity ue)
         {
-            if (!IsContainUser(ue))
+            if (!IsContainUser(ue.UserName))
             {
                 UserEntityDic.Add(ue.UserName,ue);
                 return true;
