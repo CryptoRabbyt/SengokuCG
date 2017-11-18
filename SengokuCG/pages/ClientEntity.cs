@@ -39,5 +39,14 @@ namespace SengokuCG.pages
         {
             return clientHostAddress == ce.clientHostAddress && clientAgent == ce.clientAgent;
         }
+        /// <summary>
+        /// 判断该客户端与请求客户端是否相同
+        /// </summary>
+        /// <param name="ce"></param>
+        /// <returns></returns>
+        public bool Equal(string userHostAddress, string userAgent)
+        {
+            return clientHostAddress == userHostAddress && clientAgent == userAgent;
+        }
     }
 }

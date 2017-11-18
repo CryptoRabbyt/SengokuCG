@@ -21,7 +21,12 @@ namespace SengokuCG.pages
         {
             if (context.IsWebSocketRequest)
             {
-                context.AcceptWebSocketRequest(UserThread);
+                //验证是否是原来的客户端
+                UserEntity ue = ReconnectUserManager.Instance.GetContainUser(context.Request.QueryString["userName"]);
+                if (ue.ConnectedClient.Equal(context.Request.UserHostAddress, context.Request.UserAgent))
+                {
+                    context.AcceptWebSocketRequest(UserThread);
+                }
             }
         }
 

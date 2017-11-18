@@ -23,15 +23,19 @@ namespace SengokuCG.pages.lobby
             }
         }
         #endregion
-
-        public event Action<List<LobbyRoomEntity>> update;
+        
 
         private List<LobbyRoomEntity> roomList = new List<LobbyRoomEntity>();
+        private List<UserEntity> userList = new List<UserEntity>();
 
         public void AddRoom(LobbyRoomEntity roomEntity)
         {
             roomList.Add(roomEntity);
-            update(roomList);
+        }
+
+        public void AddUser(UserEntity userEntity)
+        {
+            userList.Add(userEntity);
         }
     }
 }
