@@ -129,7 +129,7 @@
     </Compile>
     <Compile Include="pages\ClientEntity.cs" />
     <Compile Include="pages\lobby\LobbyRoomEntity.cs" />
-    <Compile Include="pages\lobby\LobbyRoomManager.cs" />
+    <Compile Include="pages\lobby\LobbyManager.cs" />
     <Compile Include="pages\lobby\LobbyUserManager.cs" />
     <Compile Include="pages\Main.aspx.cs">
       <DependentUpon>Main.aspx</DependentUpon>

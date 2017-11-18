@@ -96,36 +96,27 @@ namespace SengokuCG.pages
             {
                 curGameState = GameState.Lobby;
             }
-            InitUserSpace();
+            EnterUserSpace();
         }
         /// <summary>
         /// 根据用户的现有状态初始化用户空间
         /// </summary>
-        public void InitUserSpace()
-        {
-            switch (curGameState)
-            {
-                case GameState.None:
-                    break;
-                case GameState.Lobby:
-                    LobbyRoomManager.Instance.update += UserEntity_OnRoomUpdate;
-                    break;
-                case GameState.Room:
-                    break;
-                case GameState.Game:
-                    break;
-                default:
-                    break;
-            }
-        }
+        //public void InitUserSpace()
+        //{
+        //    EnterUserSpace();
+        //}
+        
 
-        private void UserEntity_OnRoomUpdate(List<LobbyRoomEntity> roomList)
+        /// <summary>
+        /// 重新设定用户的状态，切换其所在的空间
+        /// </summary>
+        /// <param name="gs"></param>
+        public void SetGameState(GameState gs)
         {
-            string msg = MsgCoder.Instance.CodeRoomUpdate(roomList);
-            MsgSender.Instance.SendMsg(connectedSocket, msg);
-            
+            ExitUserSpace();
+            curGameState = gs;
+            EnterUserSpace();
         }
-
         /// <summary>
         /// 退出用户所在空间
         /// </summary>
@@ -136,7 +127,6 @@ namespace SengokuCG.pages
                 case GameState.None:
                     break;
                 case GameState.Lobby:
-                    //LobbyUserManager.Instance.RemoveUser(this);
                     break;
                 case GameState.Room:
                     break;
@@ -147,16 +137,23 @@ namespace SengokuCG.pages
             }
         }
         /// <summary>
-        /// 重新设定用户的状态，切换其所在的空间
+        /// 退出用户所在空间
         /// </summary>
-        /// <param name="gs"></param>
-        public void SetGameState(GameState gs)
+        public void EnterUserSpace()
         {
-            ExitUserSpace();
-            curGameState = gs;
-            InitUserSpace();
+            switch (curGameState)
+            {
+                case GameState.None:
+                    break;
+                case GameState.Lobby:
+                    break;
+                case GameState.Room:
+                    break;
+                case GameState.Game:
+                    break;
+                default:
+                    break;
+            }
         }
-
-
     }
 }

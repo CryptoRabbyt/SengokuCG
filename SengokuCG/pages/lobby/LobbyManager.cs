@@ -5,19 +5,19 @@ using System.Web;
 
 namespace SengokuCG.pages.lobby
 {
-    public class LobbyRoomManager
+    public class LobbyManager
     {
         #region 单例
-        private static LobbyRoomManager instance;
-        private LobbyRoomManager() { }
+        private static LobbyManager instance;
+        private LobbyManager() { }
 
-        public static LobbyRoomManager Instance
+        public static LobbyManager Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LobbyRoomManager();
+                    instance = new LobbyManager();
                 }
                 return instance;
             }

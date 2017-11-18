@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SengokuCG.pages.lobby;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
@@ -57,7 +58,7 @@ namespace SengokuCG.pages
                     string userMsg = Encoding.UTF8.GetString(buffer.Array, 0, result.Count);//发送过来的消息
 
                     //--------------------测试------------------------
-                    lobby.LobbyRoomManager.Instance.AddRoom(new lobby.LobbyRoomEntity());
+                    LobbyManager.Instance.AddRoom(new LobbyRoomEntity());
                 }
             }
         }
